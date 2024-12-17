@@ -1,7 +1,7 @@
 const { response } = require('express');
-const db = require('../config/database');
 const bcrypt = require('bcrypt');
-const { generateJWT } = require('../../helpers/jsonwebtoken');
+const db = require('../config/database');
+const { generateJWT }  = require('../helpers/jsonwebtoken');
 
 exports.login = async (req, res = response) => {
   const { email, password } = req.body;
@@ -12,7 +12,7 @@ exports.login = async (req, res = response) => {
 
   try {
     // Buscar al usuario por el correo electrónico
-    const [user] = await db.execute('SELECT * FROM users WHERE email = ?', [email]);
+    const [user] = await db.execute('SELECT * FROM user WHERE email = ?', [email]);
 
     // Verificar si el usuario existe
     if (user.length === 0) {
