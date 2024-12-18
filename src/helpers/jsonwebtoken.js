@@ -22,9 +22,10 @@ exports.generateJWT = (id, email) => {
 exports.verifyJWT = (token = '') => {
     try {
         // Verificar si el token es válido
-        const { id } = jwt.verify(token, process.env.JWT_KEY);
+        const { id } = jwt.verify(token, process.env.JWT_SECRET);
         return [true, id];
     } catch (error) {
+        console.log(error);
         return [false, null];
     }
 };
