@@ -1,9 +1,9 @@
+const passport = require('passport');
 const express = require('express');
-const authMiddleware = require('../middlewares/auth_middleware');
 const { getAllScholarships } = require('../controllers/scholarship_controller');
 
 const router = express.Router();
 
-router.get('/scholarship/all', authMiddleware, getAllScholarships);
+router.get('/scholarship/all', passport.authenticate('jwt', { session: false }), getAllScholarships);
 
 module.exports = router;
