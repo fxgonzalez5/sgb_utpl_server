@@ -26,10 +26,38 @@ exports.login = async (req, res = response) => {
     }
 
     // Generar JsonWebToken
-    const token = await generateJWT(user[0].iduser, user[0].email);
+    const token = await generateJWT(user[0].id, user[0].email);
+    
+    // Eliminar la contraseña del objeto usuario
+    const { password: _, ...updateUser } = user[0];
 
     // Inicio de sesión exitoso
-    res.status(200).json({ status: true, user: user[0], token });
+    res.status(200).json({ status: true, user: updateUser, token });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ status: false, message: 'Error del servidor.' });
+  }
+};
+
+exports.renewToken = async (req, res = response) => {
+  try {
+    // Obtener el ID y el correo electrónico del usuario
+    const { userId, email } = req.user;
+
+    // Generar JsonWebToken
+    const token = await generateJWT(userId, email);
+
+    // Obtener el usuario desde la base de datos
+    const [rows] = await db.execute('SELECT * FROM user WHERE id = ?', [userId]);
+
+    // Verificar si el usuario existe    
+    if (rows.length === 0) return res.status(404).json({ status: false, message: 'Usuario no encontrado.' });
+
+    // Eliminar la contraseña del objeto usuario
+    const { password: _, ...user } = rows[0];
+
+    // Respuesta exitosa
+    res.status(200).json({ status: true, user, token });
   } catch (error) {
     console.error(error);
     res.status(500).json({ status: false, message: 'Error del servidor.' });

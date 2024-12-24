@@ -7,7 +7,7 @@ exports.generateJWT = (id, email) => {
 
         // Configurar el JWT
         jwt.sign(payload, process.env.JWT_SECRET, {
-            expiresIn: '1h',
+            expiresIn: '12h',
         }, (error, token) => {
             if (error) {
                 reject('No se pudo generar el JWT');
@@ -22,8 +22,8 @@ exports.generateJWT = (id, email) => {
 exports.verifyJWT = (token = '') => {
     try {
         // Verificar si el token es válido
-        const { id } = jwt.verify(token, process.env.JWT_SECRET);
-        return [true, id];
+        const { id, email } = jwt.verify(token, process.env.JWT_SECRET);
+        return [true, id, email];
     } catch (error) {
         console.log(error);
         return [false, null];
