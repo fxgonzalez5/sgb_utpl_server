@@ -7,7 +7,7 @@ exports.login = async (req, res = response) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    return res.status(400).json({ message: 'Por favor, completa todos los campos.' });
+    return res.status(400).json({status: false,  message: 'Por favor, completa todos los campos.' });
   }
 
   try {
@@ -16,13 +16,13 @@ exports.login = async (req, res = response) => {
 
     // Verificar si el usuario existe
     if (user.length === 0) {
-      return res.status(404).json({ message: 'Usuario no encontrado.' });
+      return res.status(404).json({status: false, message: 'Usuario no encontrado.' });
     }
 
     // Validar la contraseña
     const validPassword = bcrypt.compareSync(password, user[0].password);
     if (!validPassword) {
-      return res.status(401).json({ message: 'Contraseña incorrecta.' });
+      return res.status(401).json({status: false, message: 'Contraseña incorrecta.' });
     }
 
     // Generar JsonWebToken

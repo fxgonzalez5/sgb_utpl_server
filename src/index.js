@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 require('dotenv').config();
 
 // Archivos de rutas
@@ -12,6 +13,9 @@ const app = express();
 // Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// Activación de CORS
+app.use(cors());
 
 // Rutas de la api
 app.use('/api/auth', authRoutes);
