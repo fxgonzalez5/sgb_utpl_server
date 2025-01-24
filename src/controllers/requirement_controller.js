@@ -128,3 +128,59 @@ exports.getRequirementsByApplication = async (req, res) => {
         res.status(500).json({ status: false, message: 'Error al obtener los requisitos de la postulación.' });
     }
 };
+
+// Actualizar el estado de un requerimiento para una postulación específica
+exports.updateRequirementStatus = async (req, res) => {
+    try {
+        const { applicationId, requirementId } = req.params; // ID de la postulación y del requerimiento
+        const { status, load_documentation } = req.body; // Nuevo estado del requisito
+
+        // Validar datos de entrada
+        if (!applicationId || !requirementId) {
+            return res.status(400).json({
+                status: false,
+                message: 'Los IDs de la postulación y el requerimiento son obligatorios.',
+            });
+        }
+
+        if (typeof status !== 'boolean' && status !== null) {
+            return res.status(400).json({
+                status: false,
+                message: 'El estado debe ser un valor booleano.',
+            });
+        }
+
+        // Construir consulta dinámica para actualizar los campos
+        const updates = [];
+        const params = [];
+
+        updates.push('status = ?');
+        params.push(status);
+
+        if (load_documentation !== null) {
+            updates.push('load_documentation = ?');
+            params.push(load_documentation);
+        }
+
+        params.push(applicationId, requirementId);
+
+        // Actualizar el estado del requerimiento en la tabla application_requirement
+        const [result] = await db.execute(
+            `
+            UPDATE application_requirement
+            SET ${updates.join(', ')}, updated_at = NOW()
+            WHERE application_id = ? AND requirement_id = ?
+            `,
+            params
+        );
+
+        // Verificar si se actualizó algún registro
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ status: false, message: 'No se encontró el requerimiento para la postulación especificada.' });
+        }
+
+        res.status(200).json({status: true, message: 'Estado del requerimiento actualizado exitosamente.' });
+    } catch (error) {
+        res.status(500).json({ status: false, message: 'Error al actualizar el estado del requerimiento.' });
+    }
+};
