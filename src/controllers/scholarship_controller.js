@@ -48,3 +48,41 @@ exports.hasUserApplied = async (req, res) => {
         res.status(500).json({ status: false, message: 'Error al verificar la postulación del usuario' });
     }
 };
+
+exports.createApplication = async (req, res) => {
+    try {
+        const {
+            user_id,
+            scholarship_id,
+            year,
+            period,
+            modality,
+        } = req.body;
+
+        // Validar los campos requeridos
+        if (!user_id || !scholarship_id || !year || !period || !modality) {
+            return res.status(400).json({
+                status: false,
+                message: 'Todos los campos requeridos deben estar completos.',
+            });
+        }
+
+        // Insertar una nueva postulación
+        await db.execute(
+            `
+            INSERT INTO applications (
+                user_id,
+                scholarship_id,
+                year,
+                period,
+                modality
+            ) VALUES (?, ?, ?, ?, ?)
+            `,
+            [user_id, scholarship_id, year, period, modality]
+        );
+
+        res.status(201).json({ status: true, message: 'La postulación se ha creado exitosamente.' });
+    } catch (error) {
+        res.status(500).json({ status: false, message: 'Error al crear la postulación.'});
+    }
+};
