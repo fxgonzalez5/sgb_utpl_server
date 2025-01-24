@@ -2,6 +2,7 @@ const express = require('express');
 const authMiddleware = require('../middlewares/auth_middleware');
 const { getAllScholarships, hasUserApplied, createApplication } = require('../controllers/scholarship_controller');
 const { getScholarshipsWithRequirements, getRequirementsByApplication,  updateRequirementStatus } = require('../controllers/requirement_controller');
+const { uploadDocument } = require('../controllers/document_controller');
 
 const router = express.Router();
 
@@ -11,5 +12,6 @@ router.get('/application/:applicationId/requirements/:userId', authMiddleware, g
 router.get('/application/:userId/:year/:period', authMiddleware, hasUserApplied);
 router.post('/application', authMiddleware, createApplication);
 router.put('/application/:applicationId/requirements/:requirementId', authMiddleware, updateRequirementStatus);
+router.post('/upload/:service/:userId', uploadDocument);
 
 module.exports = router;
