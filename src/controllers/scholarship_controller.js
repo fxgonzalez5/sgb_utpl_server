@@ -114,7 +114,6 @@ exports.getUserApplications = async (req, res) => {
             FROM applications a
             JOIN scholarship s ON a.scholarship_id = s.id
             WHERE a.user_id = ?
-            ORDER BY a.application_date DESC
             `,
             [userId]
         );
@@ -143,5 +142,49 @@ exports.getUserApplications = async (req, res) => {
         res.status(200).json({ status: true, applications: applicationList });
     } catch (error) {
         res.status(500).json({ status: false, message: 'Error al obtener las postulaciones del usuario.' });
+    }
+};
+
+exports.deleteApplication = async (req, res) => {
+    try {
+        const { applicationId } = req.params; // Obtener el ID de la postulación desde la URL
+
+        if (!applicationId) {
+            return res.status(400).json({
+                status: false,
+                message: 'El ID de la postulación es obligatorio.',
+            });
+        }
+
+        // Verificar si la postulación existe antes de eliminarla
+        const [existingApplication] = await db.execute(
+            `SELECT id FROM applications WHERE id = ?`,
+            [applicationId]
+        );
+
+        if (existingApplication.length === 0) {
+            return res.status(404).json({
+                status: false,
+                message: 'No se encontró la postulación especificada.',
+            });
+        }
+
+        // Eliminar la postulación
+        const [deleteResult] = await db.execute(
+            `DELETE FROM applications WHERE id = ?`,
+            [applicationId]
+        );
+
+        // Verificar si se eliminó correctamente
+        if (deleteResult.affectedRows === 0) {
+            return res.status(500).json({
+                status: false,
+                message: 'No se pudo eliminar la postulación.',
+            });
+        }
+
+        res.status(200).json({ status: true, message: 'Postulación eliminada correctamente.' });
+    } catch (error) {
+        res.status(500).json({ status: false, message: 'Error al eliminar la postulación.' });
     }
 };
