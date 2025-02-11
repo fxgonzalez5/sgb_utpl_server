@@ -10,7 +10,7 @@ const router = express.Router();
 router.get('/scholarship/all', authMiddleware, getAllScholarships);
 router.get('/scholarship/:scholarshipId/requirements', authMiddleware, getScholarshipsWithRequirements);
 router.get('/application/:applicationId/requirements/:userId', authMiddleware, getRequirementsByApplication);
-router.get('/application/:userId/:year/:period', authMiddleware, hasUserApplied);
+router.get('/application/:userId/:year/:period/:modality', authMiddleware, hasUserApplied);
 router.post('/application', authMiddleware, createApplication);
 router.get('/application/user/:userId', authMiddleware, getUserApplications);
 router.delete('/application/remove/:applicationId', authMiddleware, deleteApplication);

@@ -13,13 +13,13 @@ exports.getAllScholarships = async (req, res) => {
 // Verificar si un usuario ha postulado a una beca en un período específico
 exports.hasUserApplied = async (req, res) => {
     try {
-        const { userId, year, period } = req.params;
+        const { userId, year, period, modality } = req.params;
 
         // Validar datos de entrada
-        if (!userId || !year || !period) {
+        if (!userId || !year || !period || !modality) {
             return res.status(400).json({
                 status: false,
-                message: 'El ID del usuario y el período son obligatorios.',
+                message: 'El ID del usuario, el año, el periodo y la modalidad son obligatorios.',
             });
         }
 
@@ -28,10 +28,10 @@ exports.hasUserApplied = async (req, res) => {
             `
             SELECT id, scholarship_id
             FROM applications
-            WHERE user_id = ? AND year = ? AND period = ?
+            WHERE user_id = ? AND year = ? AND period = ? AND modality = ?
             LIMIT 1
             `,
-            [userId, year, period]
+            [userId, year, period, modality]
         );
 
         // Verificar si se encontró una postulación
