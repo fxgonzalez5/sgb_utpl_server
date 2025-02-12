@@ -1,6 +1,7 @@
 const express = require('express');
 const authMiddleware = require('../middlewares/auth_middleware');
 const { getAllScholarships, hasUserApplied, createApplication, getUserApplications, deleteApplication } = require('../controllers/scholarship_controller');
+const { getScholarshipsFromJson, overwriteScholarshipsJson } = require('../controllers/local_data_controller');
 const { getScholarshipsWithRequirements, getRequirementsByApplication,  updateRequirementStatus } = require('../controllers/requirement_controller');
 const { uploadDocument } = require('../controllers/document_controller');
 const { getStreetAddress, insertOrUpdateUserLocation } = require('../controllers/location_controller');
@@ -9,6 +10,8 @@ const router = express.Router();
 
 router.get('/scholarship/all', authMiddleware, getAllScholarships);
 router.get('/scholarship/:scholarshipId/requirements', authMiddleware, getScholarshipsWithRequirements);
+router.get('/scholarships/application', authMiddleware, getScholarshipsFromJson);
+router.put('/scholarships/application', authMiddleware, overwriteScholarshipsJson);
 router.get('/application/:applicationId/requirements/:userId', authMiddleware, getRequirementsByApplication);
 router.get('/application/:userId/:year/:period/:modality', authMiddleware, hasUserApplied);
 router.post('/application', authMiddleware, createApplication);

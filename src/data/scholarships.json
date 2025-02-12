@@ -1,0 +1,114 @@
+[
+  {
+    "id": 1,
+    "type": "Nivel de Ingresos",
+    "category": "Apoyo Económico",
+    "percentage": 0,
+    "priority": 3
+  },
+  {
+    "id": 2,
+    "type": "Desempleo",
+    "category": "Apoyo Económico",
+    "percentage": 0,
+    "priority": 1
+  },
+  {
+    "id": 3,
+    "type": "Política de Cuotas",
+    "category": "Apoyo Económico",
+    "percentage": 0,
+    "priority": 1
+  },
+  {
+    "id": 4,
+    "type": "Discapacidad",
+    "category": "Inclusión",
+    "percentage": 0,
+    "priority": 1
+  },
+  {
+    "id": 5,
+    "type": "Centros de Rehabilitación Social",
+    "category": "Inclusión",
+    "percentage": 0,
+    "priority": 1
+  },
+  {
+    "id": 6,
+    "type": "Pueblos y Nacionalidades del Ecuador",
+    "category": "Inclusión",
+    "percentage": 0,
+    "priority": 1
+  },
+  {
+    "id": 7,
+    "type": "Funcionarios",
+    "category": "Estratégica",
+    "percentage": 0,
+    "priority": 1
+  },
+  {
+    "id": 9,
+    "type": "Familiar",
+    "category": "Estratégica",
+    "percentage": 0,
+    "priority": 1
+  },
+  {
+    "id": 10,
+    "type": "Religiosa",
+    "category": "Estratégica",
+    "percentage": 0,
+    "priority": 1
+  },
+  {
+    "id": 11,
+    "type": "Movilidad Estudiantil",
+    "category": "Estratégica",
+    "percentage": 0,
+    "priority": 1
+  },
+  {
+    "id": 14,
+    "type": "Abanderados, Escoltas y Mejores Egresados",
+    "category": "Excelencia",
+    "percentage": 0,
+    "priority": 1
+  },
+  {
+    "id": 15,
+    "type": "Responsabilidad Universitaria",
+    "category": "Excelencia",
+    "percentage": 0,
+    "priority": 1
+  },
+  {
+    "id": 16,
+    "type": "Clubes Universitarios y Grupos de Arte",
+    "category": "Excelencia",
+    "percentage": 0,
+    "priority": 1
+  },
+  {
+    "id": 17,
+    "type": "Deportistas Destacados",
+    "category": "Excelencia",
+    "percentage": 0,
+    "priority": 1
+  },
+  {
+    "id": 18,
+    "type": "Representación Estudiantil",
+    "category": "Excelencia",
+    "percentage": 0,
+    "priority": 1
+  },
+  {
+    "id": 19,
+    "type": "Méritos Universitarios",
+    "category": "Excelencia",
+    "percentage": 0,
+    "priority": 1
+  }
+]
